@@ -141,25 +141,37 @@
     // Adding the polygon to the graphics layer
     graphicsLayer.add(polygonGraphic);
 
-
     // Define a pop-up for usaeduLayer
-const popupEduusa = {
-  "title": "EDUs",
-  "content": "<b>Name:</b> {NAME}<br><b>Total Enrollment:</b> {TOT_ENROLL}<br>"
-}
+    const popupEduusa = {
+      title: "EDUs",
+      content: "<b>Name:</b> {NAME}<br><b>Total Enrollment:</b> {TOT_ENROLL}<br>"
+    };
 
-//adding the Const for the feature layer
-const usaeduLayer = new FeatureLayer({
-url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
+    // Define the renderer for the feature layer
+    const renderer = {
+      type: "simple", // autocasts as new SimpleRenderer()
+      symbol: {
+        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+        style: "square",
+        color: "yellow",
+        size: "8px", // pixels
+        outline: {
+          color: [255, 255, 255], // white
+          width: 1 // points
+        }
+      }
+    };
 
-//adding the popup here
-outFields: ["NAME","TOT_ENROLL"],
-popupTemplate: popupEduusa
- });
+    // Adding the feature layer
+    const usaeduLayer = new FeatureLayer({
+      url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
+      outFields: ["NAME", "TOT_ENROLL"],
+      popupTemplate: popupEduusa,
+      renderer: renderer
+    });
 
-//adding the feature layer to the map
-map.add(usaeduLayer);
-
+    // Adding the feature layer to the map
+    map.add(usaeduLayer);
 
   });
   </script>
