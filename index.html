@@ -13,11 +13,13 @@
   <!-- Adding the modules, API key, and map constant needed for a full screen map app -->
   <script>
   
-    require([
-     "esri/config",
-      "esri/Map",
-      "esri/views/MapView"
-    ], function (esriConfig,Map, MapView) {
+  require([  
+"esri/config",  
+"esri/Map",  
+"esri/views/MapView",   
+"esri/Graphic",  
+"esri/layers/GraphicsLayer"   
+], function(esriConfig,Map, MapView, Graphic, GraphicsLayer) {
 
       esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurGc-b1C5aUrht8KpAuN9a5q6Hl6E2t3P3ZF80nMW6US1rZJu6pkggjRB1xUmNDpf5oGDLc-4U4-Td-zpXeq1eZIjFTkZ2UQvn74bBNYc2ibH1Q10Ul61pdtuRIxTTMWgVb-7-Hd8_QUKPohD8gnlgKi2Cx_UUc6F6K8NoaVmbbPbUus1pQdDN7dyQFY4q81qnyKl61_6ZNHGdrGALPoP28E.AT1_hz92OE2q";
       const map = new Map({
@@ -30,7 +32,38 @@
           zoom: 13, // Zoom level
           container: "viewDiv" // Div element
         });
-    });
+        //Adding the contructor for the graphicslayer
+        const graphicsLayer = new GraphicsLayer();  
+        map.add(graphicsLayer);
+
+        //Defining the geometry of the point
+        const point = { //Create a point  
+         type: "point",  
+          longitude: -97.750689,    //long lat of Stevie Ray Vaughan Statue
+          latitude: 30.263098
+        };
+
+        //Defining the maker symbol
+        const simpleMarkerSymbol = {  
+        type: "simple-marker",  
+        color: [0, 0, 139],  // Color of blues rock
+        outline: {  
+        color: [255, 255, 255], // White  
+        width: 1
+        }  
+};
+
+        //Creating the point
+        const pointGraphic = new Graphic({  
+          geometry: point,  
+          symbol: simpleMarkerSymbol  
+});
+
+        //Adding the point to the graphicslayer
+        graphicsLayer.add(pointGraphic); 
+
+});
+    ;
   </script>
 
   <!-- css to make a full screen map -->
@@ -53,7 +86,3 @@
 
 </body>
 </html>
-
-git config --global user.email "heynenc@ufl.edu"
-  git config --global user.name "chloeheynen"
-  
