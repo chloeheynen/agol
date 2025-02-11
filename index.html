@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <title>Hello, Agol!</title>
@@ -12,73 +12,135 @@
 
   <!-- Adding the modules, API key, and map constant needed for a full screen map app -->
   <script>
-  
-  require([  
-"esri/config",  
-"esri/Map",  
-"esri/views/MapView",   
-"esri/Graphic",  
-"esri/layers/GraphicsLayer"   
-], function(esriConfig,Map, MapView, Graphic, GraphicsLayer) {
+  require([
+    "esri/config",
+    "esri/Map",
+    "esri/views/MapView",
+    "esri/Graphic",
+    "esri/layers/GraphicsLayer"
+  ], function(esriConfig, Map, MapView, Graphic, GraphicsLayer) {
 
-      esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurGc-b1C5aUrht8KpAuN9a5q6Hl6E2t3P3ZF80nMW6US1rZJu6pkggjRB1xUmNDpf5oGDLc-4U4-Td-zpXeq1eZIjFTkZ2UQvn74bBNYc2ibH1Q10Ul61pdtuRIxTTMWgVb-7-Hd8_QUKPohD8gnlgKi2Cx_UUc6F6K8NoaVmbbPbUus1pQdDN7dyQFY4q81qnyKl61_6ZNHGdrGALPoP28E.AT1_hz92OE2q";
-      const map = new Map({
-        basemap: "arcgis-topographic" // Basemap layer
-      });
+    esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurGc-b1C5aUrht8KpAuN9a5q6Hl6E2t3P3ZF80nMW6US1rZJu6pkggjRB1xUmNDpf5oGDLc-4U4-Td-zpXeq1eZIjFTkZ2UQvn74bBNYc2ibH1Q10Ul61pdtuRIxTTMWgVb-7-Hd8_QUKPohD8gnlgKi2Cx_UUc6F6K8NoaVmbbPbUus1pQdDN7dyQFY4q81qnyKl61_6ZNHGdrGALPoP28E.AT1_hz92OE2q";
+    const map = new Map({
+      basemap: "arcgis-topographic" // Basemap layer
+    });
 
-      const view = new MapView({
-          map: map,
-          center: [-97.7431, 30.2672], // Longitude, latitude
-          zoom: 13, // Zoom level
-          container: "viewDiv" // Div element
-        });
-        //Adding the contructor for the graphicslayer
-        const graphicsLayer = new GraphicsLayer();  
-        map.add(graphicsLayer);
+    const view = new MapView({
+      map: map,
+      center: [-97.7431, 30.2672], // Longitude, latitude
+      zoom: 13, // Zoom level
+      container: "viewDiv" // Div element
+    });
 
-        //Defining the geometry of the point
-        const point = { //Create a point  
-         type: "point",  
-          longitude: -97.750689,    //long lat of Stevie Ray Vaughan Statue
-          latitude: 30.263098
-        };
+    // Adding the constructor for the graphics layer
+    const graphicsLayer = new GraphicsLayer();
+    map.add(graphicsLayer);
 
-        //Defining the maker symbol
-        const simpleMarkerSymbol = {  
-        type: "simple-marker",  
-        style: "square",
-        color: [0, 0, 139],  // Color of blues rock
-        outline: {  
-        color: [255, 255, 255], // White  
+    // Defining the geometry of the point
+    const point = {
+      type: "point",
+      longitude: -97.750689, // long lat of Stevie Ray Vaughan Statue
+      latitude: 30.263098
+    };
+
+    // Defining the marker symbol
+    const simpleMarkerSymbol = {
+      type: "simple-marker",
+      style: "square",
+      color: [0, 0, 139], // Color of blues rock
+      outline: {
+        color: [255, 255, 255], // White
         width: 1
-        }  
-};
-        //defining the popup template
-        const popupTemplate = {
-    title: "{Name}",
-    content: "{Description}"
- }
-        const attributes = {
-    Name: "Stevie Ray Vaughan Statue",
-    Description: "A bronze sculpture of Stevie Ray Vaughan by Ralph Helmick"
- }
+      }
+    };
 
-        //Creating the point
-        const pointGraphic = new Graphic({  
-          geometry: point,  
-          symbol: simpleMarkerSymbol,
+    // Defining the popup template
+    const popupTemplate = {
+      title: "{Name}",
+      content: "{Description}"
+    };
 
-        //adding popup properties
-        attributes: attributes,
-        popupTemplate: popupTemplate
+    const attributes = {
+      Name: "Stevie Ray Vaughan Statue",
+      Description: "A bronze sculpture of Stevie Ray Vaughan by Ralph Helmick"
+    };
 
-});
+    // Creating the point
+    const pointGraphic = new Graphic({
+      geometry: point,
+      symbol: simpleMarkerSymbol,
+      attributes: attributes,
+      popupTemplate: popupTemplate
+    });
 
-        //Adding the point to the graphicslayer
-        graphicsLayer.add(pointGraphic); 
+    // Adding the point to the graphics layer
+    graphicsLayer.add(pointGraphic);
 
-});
-    ;
+    // Defining the polyline geometry
+    const polyline = {
+      type: "polyline",
+      paths: [
+        [-97.7431, 30.2672], // Downtown Austin
+        [-97.7356, 30.2849], // University of Texas at Austin
+        [-97.7472, 30.2930]  // West Campus
+      ]
+    };
+
+    // Defining the polyline symbol
+    const simpleLineSymbol = {
+      type: "simple-line",
+      color: [226, 119, 40], // Orange
+      width: 2
+    };
+
+    // Creating the polyline graphic
+    const polylineGraphic = new Graphic({
+      geometry: polyline,
+      symbol: simpleLineSymbol
+    });
+
+    // Adding the polyline to the graphics layer
+    graphicsLayer.add(polylineGraphic);
+
+    // Defining the polygon geometry
+    const polygon = {
+      type: "polygon",
+      rings: [
+        [-97.7403, 30.2831], // Point 1
+        [-97.7303, 30.2831], // Point 2
+        [-97.7303, 30.2901], // Point 3
+        [-97.7403, 30.2901], // Point 4
+        [-97.7403, 30.2831]  // Point 5 (same as Point 1 to close the polygon)
+      ]
+    };
+
+    // Defining the polygon symbol
+    const simpleFillSymbol = {
+      type: "simple-fill",
+      color: [227, 139, 79, 0.8], // Orange, with transparency
+      outline: {
+        color: [255, 255, 255], // White
+        width: 1
+      }
+    };
+
+    // Defining the polygon popup template
+    const polygonPopupTemplate = {
+      title: "University of Texas at Austin",
+      content: "This polygon represents the University of Texas at Austin's campus."
+    };
+
+    // Creating the polygon graphic
+    const polygonGraphic = new Graphic({
+      geometry: polygon,
+      symbol: simpleFillSymbol,
+      popupTemplate: polygonPopupTemplate
+    });
+
+    // Adding the polygon to the graphics layer
+    graphicsLayer.add(polygonGraphic);
+
+  });
   </script>
 
   <!-- css to make a full screen map -->
