@@ -46,17 +46,32 @@
         //Defining the maker symbol
         const simpleMarkerSymbol = {  
         type: "simple-marker",  
+        style: "square",
         color: [0, 0, 139],  // Color of blues rock
         outline: {  
         color: [255, 255, 255], // White  
         width: 1
         }  
 };
+        //defining the popup template
+        const popupTemplate = {
+    title: "{Name}",
+    content: "{Description}"
+ }
+        const attributes = {
+    Name: "Stevie Ray Vaughan Statue",
+    Description: "A bronze sculpture of Stevie Ray Vaughan by Ralph Helmick"
+ }
 
         //Creating the point
         const pointGraphic = new Graphic({  
           geometry: point,  
-          symbol: simpleMarkerSymbol  
+          symbol: simpleMarkerSymbol ,
+
+        //adding popup properties
+        attributes: attributes,
+        popupTemplate: popupTemplate
+
 });
 
         //Adding the point to the graphicslayer
