@@ -162,7 +162,7 @@
       }
     };
 
-  // Adding the feature layer
+    // Adding the usaeduLayer feature layer
     const usaeduLayer = new FeatureLayer({
       url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
       outFields: ["NAME", "TOT_ENROLL", "WEBADDR"],
@@ -170,9 +170,40 @@
       renderer: renderer
     });
 
-    // Adding the feature layer to the map
+    // Adding the usaeduLayer feature layer to the map
     map.add(usaeduLayer);
 
+    // Define a pop-up for the airports layer
+    const popupAirports = {
+      title: "Airports",
+      content: "<b>Name:</b> {Fac_Name}<br><b>Type:</b> {Fac_Type}<br><b>Use:</b> {Fac_Use}"
+    };
+
+    // Define the renderer for the airports feature layer
+    const airportRenderer = {
+      type: "simple", // autocasts as new SimpleRenderer()
+      symbol: {
+        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+        style: "square",
+        color: "red",
+        size: "8px", // pixels
+        outline: {
+          color: [255, 255, 255], // white
+          width: 1 // points
+        }
+      }
+    };
+
+    // Adding the airports feature layer
+    const airportsLayer = new FeatureLayer({
+      url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/USAirportsZIPFILE/FeatureServer",
+      outFields: ["Fac_Name", "Fac_Type", "Fac_Use"],
+      popupTemplate: popupAirports,
+      renderer: airportRenderer
+    });
+
+    // Adding the airports feature layer to the map
+    map.add(airportsLayer);
 
   });
   </script>
