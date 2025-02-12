@@ -179,19 +179,36 @@
       content: "<b>Name:</b> {Fac_Name}<br><b>Type:</b> {Fac_Type}<br><b>Use:</b> {Fac_Use}"
     };
 
-    // Define the renderer for the airports feature layer
+    // Define the unique value renderer for the airports feature layer
     const airportRenderer = {
-      type: "simple", // autocasts as new SimpleRenderer()
-      symbol: {
-        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-        style: "square",
-        color: "red",
-        size: "8px", // pixels
-        outline: {
-          color: [255, 255, 255], // white
-          width: 1 // points
+      type: "unique-value", // autocasts as new UniqueValueRenderer()
+      field: "Fac_Type",
+      uniqueValueInfos: [
+        {
+          value: "HELIPORT",
+          symbol: {
+            type: "text",
+            color: "red",
+            text: "H",
+            font: { // autocast as new Font()
+              size: 12,
+              weight: "bold"
+            }
+          }
+        },
+        {
+          value: "AIRPORT",
+          symbol: {
+            type: "text",
+            color: "red",
+            text: "A",
+            font: { // autocast as new Font()
+              size: 12,
+              weight: "bold"
+            }
+          }
         }
-      }
+      ]
     };
 
     // Adding the airports feature layer
